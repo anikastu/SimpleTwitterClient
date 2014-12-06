@@ -1,7 +1,6 @@
 package com.codepath.apps.basictwitter;
 
 import org.scribe.builder.api.Api;
-import org.scribe.builder.api.FlickrApi;
 import org.scribe.builder.api.TwitterApi;
 
 import android.content.Context;
@@ -26,11 +25,18 @@ public class TwitterClient extends OAuthBaseClient {
 	public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class; // Change this
 	public static final String REST_URL = "https://api.twitter.com/1.1"; // Change this, base API URL
 	public static final String REST_CONSUMER_KEY = "88qQYBkNHIseD2sCqghGrVOxB";       // Change this
-	public static final String REST_CONSUMER_SECRET = "s5GaJSryj1GyNsRzDiUCbN3BrrEQNZAJWmEZ3cNgvVxtKocWjm "; // Change this
+	public static final String REST_CONSUMER_SECRET = "s5GaJSryj1GyNsRzDiUCbN3BrrEQNZAJWmEZ3cNgvVxtKocWjm"; // Change this
 	public static final String REST_CALLBACK_URL = "oauth://cpbasictweets"; // Change this (here and in manifest)
 
 	public TwitterClient(Context context) {
 		super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
+	}
+	
+	public void getHomeTimeline(AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/home_timeline.json");
+		RequestParams params = new RequestParams();
+		params.put("since_id", "1");
+		client.get(apiUrl, params, handler);
 	}
 
 	// CHANGE THIS
